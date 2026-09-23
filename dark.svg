@@ -1,0 +1,258 @@
+<svg fill="none" viewBox="0 0 1180 610" width="100%" height="610" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Inter:wght@400;600;800&amp;display=swap');
+
+      .bg-main { fill: #0A101F; }
+      .ui-chrome { stroke: #22D3EE; stroke-width: 1; }
+      .ui-cyan { fill: #22D3EE; }
+      .ui-accent { fill: #10B981; }
+      .text-head { font-family: 'Fira Code', monospace; font-size: 13px; font-weight: 600; fill: #22D3EE; letter-spacing: 1.5px; }
+      .text-label { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 500; fill: #64748B; }
+      .text-val { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; fill: #F1F5F9; }
+      .text-accent { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; fill: #10B981; }
+      .text-cyan { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; fill: #22D3EE; }
+      
+      /* Pulsing LIVE animation */
+      @keyframes pulseRed {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.3; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      .live-dot { animation: pulseRed 1.8s infinite ease-in-out; transform-origin: 940px 92px; }
+
+      /* Shimmering dot matrix drift */
+      @keyframes dotDrift {
+        0% { opacity: 0.85; transform: translateY(0px); }
+        50% { opacity: 1.0; transform: translateY(-1.5px); }
+        100% { opacity: 0.85; transform: translateY(0px); }
+      }
+      .dither-layer { animation: dotDrift 4s infinite ease-in-out; }
+    </style>
+
+    <!-- Linear Gradients -->
+    <linearGradient id="portraitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC"/>
+      <stop offset="50%" stop-color="#A78BFA"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#0891B2" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern for VISUAL.MAP Panel -->
+    <pattern id="dotGrid" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="0.8" fill="#22D3EE" fill-opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Main Terminal Outer Window -->
+  <rect width="1180" height="610" rx="12" fill="#0A101F" stroke="url(#borderGrad)" stroke-width="1.5"/>
+
+  <!-- Terminal Top Header Bar -->
+  <path d="M 0 12 C 0 5.37 5.37 0 12 0 L 1168 0 C 1174.63 0 1180 5.37 1180 12 L 1180 40 L 0 40 Z" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+  
+  <!-- Window Controls (Red, Yellow, Green Dots) -->
+  <circle cx="24" cy="20" r="5.5" fill="#EF4444"/>
+  <circle cx="42" cy="20" r="5.5" fill="#F59E0B"/>
+  <circle cx="60" cy="20" r="5.5" fill="#10B981"/>
+
+  <!-- Window Title -->
+  <text x="590" y="25" text-anchor="middle" font-family="'Fira Code', monospace" font-size="13" font-weight="600" fill="#94A3B8" letter-spacing="1.5">
+    profile.sh --live
+  </text>
+
+  <!-- Left Panel: VISUAL.MAP (x=30, y=55, w=380, h=525) -->
+  <rect x="30" y="55" width="380" height="525" rx="8" fill="#070C18" stroke="#1E293B" stroke-width="1"/>
+  <rect x="30" y="55" width="380" height="525" rx="8" fill="url(#dotGrid)"/>
+  
+  <!-- Left Panel Header -->
+  <text x="48" y="88" class="text-head">VISUAL.MAP</text>
+  <line x1="48" y1="98" x2="392" y2="98" stroke="#1E293B" stroke-width="1"/>
+
+  <!-- Dithered Neural Matrix Portrait (Floyd-Steinberg Dot Lattice Representation) -->
+  <g class="dither-layer" transform="translate(65, 115)">
+    <!-- Face Outer Contour & Head Frame -->
+    <!-- Head Outline Dots -->
+    <path shape-rendering="crispEdges" fill="url(#portraitGrad)" d="
+      M 90 20 h 130 v 4 h -130 z M 75 28 h 160 v 4 h -160 z M 65 36 h 180 v 4 h -180 z
+      M 55 44 h 200 v 4 h -200 z M 50 52 h 210 v 4 h -210 z M 45 60 h 220 v 4 h -220 z
+      M 40 68 h 230 v 4 h -230 z M 38 76 h 234 v 4 h -234 z M 36 84 h 238 v 4 h -238 z
+      M 34 92 h 242 v 4 h -242 z M 34 100 h 242 v 4 h -242 z M 34 108 h 242 v 4 h -242 z
+      
+      /* Forehead & Eyebrow Density Shadowing */
+      M 40 120 h 80 v 3 h -80 z M 190 120 h 80 v 3 h -80 z
+      M 50 128 h 60 v 4 h -60 z M 200 128 h 60 v 4 h -60 z
+      
+      /* Eyes & Glasses Frame Structure */
+      M 60 140 h 50 v 8 h -50 z M 190 140 h 50 v 8 h -50 z
+      M 75 142 h 20 v 4 h -20 z M 205 142 h 20 v 4 h -20 z
+      M 120 144 h 60 v 3 h -60 z
+      
+      /* Nose Ridge & Shadow Dots */
+      M 145 152 h 18 v 25 h -18 z M 140 177 h 28 v 5 h -28 z
+      
+      /* Lips & Expression Contour */
+      M 115 195 h 78 v 4 h -78 z
+      M 125 203 h 58 v 5 h -58 z
+      
+      /* Jawline & Neck Taper */
+      M 45 160 h 20 v 50 h -20 z M 245 160 h 20 v 50 h -20 z
+      M 55 210 h 30 v 30 h -30 z M 225 210 h 30 v 30 h -225 z
+      M 70 240 h 170 v 10 h -170 z M 85 250 h 140 v 15 h -140 z
+      
+      /* Shoulders & Torso Head-and-Shoulders Frame */
+      M 20 275 h 270 v 12 h -270 z M 10 290 h 290 v 15 h -290 z
+      M 0 308 h 310 v 40 h -310 z
+    "/>
+
+    <!-- High-Resolution Dithered Dot Matrix Swarm (Serpentine Floyd-Steinberg Dots) -->
+    <path shape-rendering="crispEdges" fill="#22D3EE" fill-opacity="0.75" d="
+      M 80 40 h 3 v 3 h -3 z M 92 42 h 3 v 3 h -3 z M 110 38 h 3 v 3 h -3 z M 130 45 h 3 v 3 h -3 z
+      M 160 42 h 3 v 3 h -3 z M 180 40 h 3 v 3 h -3 z M 200 48 h 3 v 3 h -3 z M 215 44 h 3 v 3 h -3 z
+      M 70 80 h 3 v 3 h -3 z M 85 85 h 3 v 3 h -3 z M 105 82 h 3 v 3 h -3 z M 195 85 h 3 v 3 h -3 z
+      M 215 80 h 3 v 3 h -3 z M 235 88 h 3 v 3 h -3 z M 95 110 h 3 v 3 h -3 z M 205 110 h 3 v 3 h -3 z
+      M 125 125 h 3 v 3 h -3 z M 175 125 h 3 v 3 h -3 z M 148 135 h 3 v 3 h -3 z M 152 165 h 3 v 3 h -3 z
+      M 110 185 h 3 v 3 h -3 z M 190 185 h 3 v 3 h -3 z M 100 220 h 3 v 3 h -3 z M 200 220 h 3 v 3 h -3 z
+      M 40 280 h 3 v 3 h -3 z M 70 285 h 3 v 3 h -3 z M 240 285 h 3 v 3 h -3 z M 270 280 h 3 v 3 h -3 z
+    "/>
+  </g>
+
+  <!-- Left Panel Footer Tech Coordinates -->
+  <text x="48" y="555" font-family="'Fira Code', monospace" font-size="11" font-weight="500" fill="#475569">
+    GRID: 300x340 // DITHER: FLOYD-STEINBERG
+  </text>
+
+
+  <!-- Right Panel: SYSTEM.INFO (x=430, y=55, w=720, h=525) -->
+  <rect x="430" y="55" width="720" height="525" rx="8" fill="#070C18" stroke="#1E293B" stroke-width="1"/>
+
+  <!-- Right Panel Header -->
+  <text x="455" y="88" class="text-head">SYSTEM.INFO</text>
+
+  <!-- Pulsing LIVE Badge -->
+  <g transform="translate(900, 72)">
+    <rect x="0" y="0" width="75" height="24" rx="12" fill="#1C1017" stroke="#EF4444" stroke-width="1"/>
+    <circle cx="15" cy="12" r="4" fill="#EF4444" class="live-dot"/>
+    <text x="26" y="16" font-family="'Fira Code', monospace" font-size="11" font-weight="700" fill="#EF4444">LIVE</text>
+  </g>
+
+  <!-- User Handle Pill Badge -->
+  <g transform="translate(990, 72)">
+    <rect x="0" y="0" width="135" height="24" rx="12" fill="#0F1F38" stroke="#22D3EE" stroke-width="1"/>
+    <text x="67.5" y="16" text-anchor="middle" font-family="'Fira Code', monospace" font-size="11" font-weight="600" fill="#22D3EE">@radhikarajput0410-wq</text>
+  </g>
+
+  <line x1="455" y1="105" x2="1125" y2="105" stroke="#1E293B" stroke-width="1"/>
+
+
+  <!-- Data Rows with Dotted Leaders & Locked Lengths -->
+  
+  <!-- Row 1: Subject -->
+  <g transform="translate(455, 138)">
+    <text x="0" y="0" class="text-label">Subject</text>
+    <text x="80" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="340" lengthAdjust="spacingAndGlyphs">..................................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="180" lengthAdjust="spacingAndGlyphs">Radhika Rajput</text>
+  </g>
+
+  <!-- Row 2: Role -->
+  <g transform="translate(455, 168)">
+    <text x="0" y="0" class="text-label">Role</text>
+    <text x="50" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="280" lengthAdjust="spacingAndGlyphs">........................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-cyan" textLength="320" lengthAdjust="spacingAndGlyphs">Data Scientist &amp; AI/ML Engineer</text>
+  </g>
+
+  <!-- Row 3: Origin -->
+  <g transform="translate(455, 198)">
+    <text x="0" y="0" class="text-label">Origin</text>
+    <text x="70" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="480" lengthAdjust="spacingAndGlyphs">......................................................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="80" lengthAdjust="spacingAndGlyphs">India</text>
+  </g>
+
+  <!-- Row 4: Education -->
+  <g transform="translate(455, 228)">
+    <text x="0" y="0" class="text-label">Education</text>
+    <text x="100" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="270" lengthAdjust="spacingAndGlyphs">........................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="280" lengthAdjust="spacingAndGlyphs">Computer Science &amp; AI</text>
+  </g>
+
+  <!-- Row 5: Status -->
+  <g transform="translate(455, 258)">
+    <text x="0" y="0" class="text-label">Status</text>
+    <text x="70" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="190" lengthAdjust="spacingAndGlyphs">............................</text>
+    <text x="670" y="0" text-anchor="end" class="text-accent" textLength="390" lengthAdjust="spacingAndGlyphs">Building AI Models + Learning + Shipping</text>
+  </g>
+
+  <!-- Row 6: ToolChain -->
+  <g transform="translate(455, 288)">
+    <text x="0" y="0" class="text-label">ToolChain</text>
+    <text x="95" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="160" lengthAdjust="spacingAndGlyphs">........................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="400" lengthAdjust="spacingAndGlyphs">VS Code · Git · PyTorch · Docker · AWS</text>
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="455" y1="306" x2="1125" y2="306" stroke="#1E293B" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- Row 7: Core.Lang -->
+  <g transform="translate(455, 332)">
+    <text x="0" y="0" class="text-label">Core.Lang</text>
+    <text x="95" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="330" lengthAdjust="spacingAndGlyphs">........................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-cyan" textLength="230" lengthAdjust="spacingAndGlyphs">Python · SQL · R · C++</text>
+  </g>
+
+  <!-- Row 8: Core.Frontend -->
+  <g transform="translate(455, 362)">
+    <text x="0" y="0" class="text-label">Core.Frontend</text>
+    <text x="135" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="330" lengthAdjust="spacingAndGlyphs">........................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="180" lengthAdjust="spacingAndGlyphs">Streamlit · FastAPI</text>
+  </g>
+
+  <!-- Row 9: Core.Backend -->
+  <g transform="translate(455, 392)">
+    <text x="0" y="0" class="text-label">Core.Backend</text>
+    <text x="125" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="260" lengthAdjust="spacingAndGlyphs">................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="270" lengthAdjust="spacingAndGlyphs">Python · FastAPI · PyTorch</text>
+  </g>
+
+  <!-- Row 10: Core.Database -->
+  <g transform="translate(455, 422)">
+    <text x="0" y="0" class="text-label">Core.Database</text>
+    <text x="135" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="250" lengthAdjust="spacingAndGlyphs">................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="270" lengthAdjust="spacingAndGlyphs">PostgreSQL · FAISS VectorDB</text>
+  </g>
+
+  <!-- Row 11: Core.Infra -->
+  <g transform="translate(455, 452)">
+    <text x="0" y="0" class="text-label">Core.Infra</text>
+    <text x="105" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="250" lengthAdjust="spacingAndGlyphs">................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="300" lengthAdjust="spacingAndGlyphs">Docker · AWS · GitHub Actions</text>
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="455" y1="470" x2="1125" y2="470" stroke="#1E293B" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- Row 12: Grid.Mail -->
+  <g transform="translate(455, 494)">
+    <text x="0" y="0" class="text-label">Grid.Mail</text>
+    <text x="95" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="300" lengthAdjust="spacingAndGlyphs">....................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-cyan" textLength="260" lengthAdjust="spacingAndGlyphs">radhikarajput0410@gmail.com</text>
+  </g>
+
+  <!-- Row 13: Grid.LinkedIn -->
+  <g transform="translate(455, 524)">
+    <text x="0" y="0" class="text-label">Grid.LinkedIn</text>
+    <text x="125" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="290" lengthAdjust="spacingAndGlyphs">....................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-val" textLength="240" lengthAdjust="spacingAndGlyphs">radhika-rajput-832524345</text>
+  </g>
+
+  <!-- Row 14: Grid.GitHub -->
+  <g transform="translate(455, 554)">
+    <text x="0" y="0" class="text-label">Grid.GitHub</text>
+    <text x="115" y="-1" font-family="'Fira Code', monospace" font-size="14" fill="#334155" textLength="330" lengthAdjust="spacingAndGlyphs">........................................</text>
+    <text x="670" y="0" text-anchor="end" class="text-accent" textLength="210" lengthAdjust="spacingAndGlyphs">radhikarajput0410-wq</text>
+  </g>
+
+</svg>

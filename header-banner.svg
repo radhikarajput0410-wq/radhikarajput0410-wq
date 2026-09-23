@@ -1,90 +1,45 @@
-<svg fill="none" viewBox="0 0 800 240" width="100%" height="240" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" viewBox="0 0 800 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050714"/>
-      <stop offset="50%" stop-color="#0b0f28"/>
-      <stop offset="100%" stop-color="#050714"/>
+    <linearGradient id="minBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
     </linearGradient>
-
-    <!-- Cyan Glow Filter -->
-    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <!-- Magenta Glow Filter -->
-    <filter id="glowMagenta" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <!-- Linear Text Gradients -->
-    <linearGradient id="cyanMagentaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00f3ff"/>
-      <stop offset="50%" stop-color="#b026ff"/>
-      <stop offset="100%" stop-color="#ff007f"/>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
     </linearGradient>
-
-    <!-- Grid Pattern -->
-    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00f3ff" stroke-width="0.5" stroke-opacity="0.12"/>
-    </pattern>
   </defs>
 
-  <!-- Background Layer -->
-  <rect width="800" height="240" rx="16" fill="url(#bgGrad)"/>
+  <!-- Background -->
+  <rect width="800" height="160" rx="12" fill="url(#minBg)" stroke="#30363d" stroke-width="1"/>
 
-  <!-- Cyber Grid Overlay -->
-  <rect width="800" height="240" rx="16" fill="url(#cyberGrid)"/>
+  <!-- Minimal Accent Line -->
+  <rect x="40" y="35" width="4" height="90" rx="2" fill="url(#cyanGrad)"/>
 
-  <!-- Top & Bottom Glowing Borders -->
-  <path d="M 20 2 L 780 2" stroke="url(#cyanMagentaGrad)" stroke-width="3" filter="url(#glowCyan)"/>
-  <path d="M 20 238 L 780 238" stroke="url(#cyanMagentaGrad)" stroke-width="3" filter="url(#glowMagenta)"/>
+  <!-- Content Container -->
+  <g transform="translate(60, 0)">
+    <!-- Subtitle / Role -->
+    <text x="0" y="52" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" letter-spacing="2">
+      DATA SCIENTIST &bull; AI/ML ENGINEER
+    </text>
 
-  <!-- Cyberpunk Visual Accents (Corner Lights) -->
-  <circle cx="30" cy="30" r="3" fill="#00f3ff" filter="url(#glowCyan)"/>
-  <circle cx="770" cy="30" r="3" fill="#ff007f" filter="url(#glowMagenta)"/>
-  <circle cx="30" cy="210" r="3" fill="#ff007f" filter="url(#glowMagenta)"/>
-  <circle cx="770" cy="210" r="3" fill="#00f3ff" filter="url(#glowCyan)"/>
+    <!-- Main Title -->
+    <text x="0" y="92" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="800" fill="#f0f6fc" letter-spacing="-0.5">
+      Radhika Rajput
+    </text>
 
-  <!-- Horizontal Tech Lines -->
-  <line x1="50" y1="30" x2="200" y2="30" stroke="#00f3ff" stroke-width="1" stroke-opacity="0.4"/>
-  <line x1="600" y1="30" x2="750" y2="30" stroke="#ff007f" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Description -->
+    <text x="0" y="118" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8b949e">
+      Building scalable deep learning systems, LLMs, and computer vision solutions.
+    </text>
+  </g>
 
-  <!-- Terminal Header / Tagline -->
-  <text x="400" y="65" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="14" font-weight="600" fill="#00f3ff" letter-spacing="4" filter="url(#glowCyan)">
-    SYS.INIT // SYSTEM ONLINE &bull; AI ARCHITECT
-  </text>
-
-  <!-- Main Name Text -->
-  <text x="400" y="125" text-anchor="middle" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="900" fill="url(#cyanMagentaGrad)" letter-spacing="2" filter="url(#glowCyan)">
-    RADHIKA RAJPUT
-  </text>
-
-  <!-- Subtitle Text -->
-  <text x="400" y="165" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="18" font-weight="700" fill="#e0e6ed" letter-spacing="2">
-    DATA SCIENTIST &bull; AI/ML ENGINEER &bull; DEEP LEARNING
-  </text>
-
-  <!-- Cyber Badge Highlights -->
-  <g transform="translate(230, 185)">
-    <!-- Pill 1: PyTorch / TensorFlow -->
-    <rect x="0" y="0" width="105" height="24" rx="12" fill="#0c122c" stroke="#00f3ff" stroke-width="1"/>
-    <text x="52.5" y="16" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#00f3ff">PyTorch / TF</text>
-
-    <!-- Pill 2: Computer Vision & LLMs -->
-    <rect x="115" y="0" width="115" height="24" rx="12" fill="#0c122c" stroke="#b026ff" stroke-width="1"/>
-    <text x="172.5" y="16" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b026ff">LLMs &amp; GenAI</text>
-
-    <!-- Pill 3: MLOps & Data -->
-    <rect x="240" y="0" width="100" height="24" rx="12" fill="#0c122c" stroke="#ff007f" stroke-width="1"/>
-    <text x="290" y="16" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ff007f">MLOps &amp; Data</text>
+  <!-- Status Pill (Top Right) -->
+  <g transform="translate(590, 35)">
+    <rect x="0" y="0" width="170" height="28" rx="14" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+    <circle cx="16" cy="14" r="4" fill="#10b981"/>
+    <text x="28" y="18" font-family="'Inter', sans-serif" font-size="11" font-weight="500" fill="#d1d5db">
+      Available for AI Roles
+    </text>
   </g>
 </svg>
