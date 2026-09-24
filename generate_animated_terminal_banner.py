@@ -66,8 +66,8 @@ def build_portrait_dither_path(offset_x=85, offset_y=135):
             
     return " ".join(path_runs)
 
-# 2. Draw Stippled Tech Badge (PY / PT / AI)
-def create_dithered_badge_path(draw_func, offset_x=105, offset_y=160, width=240, height=240):
+# 2. Draw Dithered Tech Logos & Emblems
+def create_dithered_logo_path(draw_func, offset_x=105, offset_y=160, width=240, height=240):
     img = Image.new('L', (width, height), 255)
     draw = ImageDraw.Draw(img)
     draw_func(draw, width, height)
@@ -95,55 +95,43 @@ def create_dithered_badge_path(draw_func, offset_x=105, offset_y=160, width=240,
                 
     return " ".join(path_runs)
 
-# Badge 1: PY (Python Tech Badge)
-def draw_badge_py(draw, w, h):
+# Logo 1: Python Double-Snake Emblem
+def draw_python_logo(draw, w, h):
     cx, cy = w // 2, h // 2
-    # Outer square stippled border
-    b = 85
-    draw.rectangle([cx - b, cy - b, cx + b, cy + b], fill=0)
-    draw.rectangle([cx - b + 10, cy - b + 10, cx + b - 10, cy + b - 10], fill=255)
+    # Upper snake
+    draw.rectangle([cx - 45, cy - 65, cx + 18, cy - 20], fill=0)
+    draw.rectangle([cx - 65, cy - 40, cx + 45, cy - 5], fill=0)
+    draw.ellipse([cx - 22, cy - 52, cx - 8, cy - 38], fill=255) # Eye
     
-    # Letter P
-    draw.rectangle([cx - 55, cy - 45, cx - 38, cy + 45], fill=0)
-    draw.rectangle([cx - 55, cy - 45, cx - 10, cy], fill=0)
-    draw.rectangle([cx - 38, cy - 30, cx - 10, cy - 15], fill=255)
-    
-    # Letter Y
-    draw.polygon([(cx + 5, cy - 45), (cx + 22, cy - 45), (cx + 38, cy - 5), (cx + 38, cy + 45), (cx + 21, cy + 45), (cx + 21, cy - 5), (cx + 5, cy - 45)], fill=0)
-    draw.polygon([(cx + 70, cy - 45), (cx + 53, cy - 45), (cx + 38, cy - 5)], fill=0)
+    # Lower snake
+    draw.rectangle([cx - 18, cy + 20, cx + 45, cy + 65], fill=0)
+    draw.rectangle([cx - 45, cy + 5, cx + 65, cy + 40], fill=0)
+    draw.ellipse([cx + 8, cy + 38, cx + 22, cy + 52], fill=255) # Eye
 
-# Badge 2: PT (PyTorch Tech Badge)
-def draw_badge_pt(draw, w, h):
+# Logo 2: PyTorch Flame Emblem
+def draw_pytorch_logo(draw, w, h):
     cx, cy = w // 2, h // 2
-    b = 85
-    draw.rectangle([cx - b, cy - b, cx + b, cy + b], fill=0)
-    draw.rectangle([cx - b + 10, cy - b + 10, cx + b - 10, cy + b - 10], fill=255)
-    
-    # Letter P
-    draw.rectangle([cx - 58, cy - 45, cx - 41, cy + 45], fill=0)
-    draw.rectangle([cx - 58, cy - 45, cx - 15, cy], fill=0)
-    draw.rectangle([cx - 41, cy - 30, cx - 15, cy - 15], fill=255)
-    
-    # Letter T
-    draw.rectangle([cx - 5, cy - 45, cx + 60, cy - 30], fill=0)
-    draw.rectangle([cx + 18, cy - 45, cx + 36, cy + 45], fill=0)
+    draw.ellipse([cx - 70, cy - 70, cx + 70, cy + 70], outline=0, width=16)
+    draw.ellipse([cx - 16, cy - 16, cx + 16, cy + 16], fill=0)
+    draw.polygon([(cx + 20, cy - 88), (cx + 62, cy - 32), (cx + 15, cy - 42)], fill=0)
 
-# Badge 3: AI (Artificial Intelligence / LLM Badge)
-def draw_badge_ai(draw, w, h):
+# Logo 3: AI Neural Network Brain Node Matrix Emblem
+def draw_ai_brain_logo(draw, w, h):
     cx, cy = w // 2, h // 2
-    b = 85
-    draw.rectangle([cx - b, cy - b, cx + b, cy + b], fill=0)
-    draw.rectangle([cx - b + 10, cy - b + 10, cx + b - 10, cy + b - 10], fill=255)
+    # Outer stippled ring frame
+    draw.ellipse([cx - 75, cy - 75, cx + 75, cy + 75], outline=0, width=12)
+    # Center node
+    draw.ellipse([cx - 20, cy - 20, cx + 20, cy + 20], fill=0)
     
-    # Letter A
-    draw.polygon([(cx - 55, cy + 45), (cx - 38, cy + 45), (cx - 28, cy - 45), (cx - 45, cy - 45)], fill=0)
-    draw.polygon([(cx - 5, cy + 45), (cx - 22, cy + 45), (cx - 28, cy - 45), (cx - 12, cy - 45)], fill=0)
-    draw.rectangle([cx - 45, cy, cx - 15, cy + 14], fill=0)
-    
-    # Letter I
-    draw.rectangle([cx + 10, cy - 45, cx + 60, cy - 31], fill=0)
-    draw.rectangle([cx + 26, cy - 45, cx + 44, cy + 45], fill=0)
-    draw.rectangle([cx + 10, cy + 31, cx + 60, cy + 45], fill=0)
+    # 6 Surrounding nodes & connecting arms
+    angles = [0, 60, 120, 180, 240, 300]
+    r_dist = 50
+    for a in angles:
+        rad = np.radians(a)
+        nx = int(cx + r_dist * np.cos(rad))
+        ny = int(cy + r_dist * np.sin(rad))
+        draw.line([(cx, cy), (nx, ny)], fill=0, width=8)
+        draw.ellipse([nx - 14, ny - 14, nx + 14, ny + 14], fill=0)
 
 def generate_banner_svg(filename, is_dark=True):
     bg_main     = "#0B101D" if is_dark else "#F1F5F9"
@@ -158,9 +146,9 @@ def generate_banner_svg(filename, is_dark=True):
     dot_color   = "#334155" if is_dark else "#CBD5E1"
     
     portrait_d = build_portrait_dither_path(offset_x=85, offset_y=135)
-    py_d       = create_dithered_badge_path(draw_badge_py, offset_x=105, offset_y=160)
-    torch_d    = create_dithered_badge_path(draw_badge_pt, offset_x=105, offset_y=160)
-    ai_d       = create_dithered_badge_path(draw_badge_ai, offset_x=105, offset_y=160)
+    py_d       = create_dithered_logo_path(draw_python_logo, offset_x=105, offset_y=160)
+    torch_d    = create_dithered_logo_path(draw_pytorch_logo, offset_x=105, offset_y=160)
+    ai_d       = create_dithered_logo_path(draw_ai_brain_logo, offset_x=105, offset_y=160)
 
     key_times   = "0; 0.1875; 0.25; 0.4375; 0.50; 0.6875; 0.75; 0.9375; 1.0"
     op_portrait = "1; 1; 0; 0; 0; 0; 0; 0; 1"
@@ -221,21 +209,21 @@ def generate_banner_svg(filename, is_dark=True):
       </path>
     </g>
 
-    <!-- Frame 2: PY (Python) Stippled Tech Badge -->
+    <!-- Frame 2: Python Dithered Logo -->
     <g id="layer-python">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{py_d}">
         <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_py}"/>
       </path>
     </g>
 
-    <!-- Frame 3: PT (PyTorch) Stippled Tech Badge -->
+    <!-- Frame 3: PyTorch Dithered Logo -->
     <g id="layer-pytorch">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{torch_d}">
         <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_torch}"/>
       </path>
     </g>
 
-    <!-- Frame 4: AI (Artificial Intelligence) Stippled Tech Badge -->
+    <!-- Frame 4: AI Neural Network Dithered Emblem -->
     <g id="layer-huggingface">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{ai_d}">
         <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_ai}"/>
@@ -247,108 +235,108 @@ def generate_banner_svg(filename, is_dark=True):
   <rect x="455" y="90" width="680" height="475" rx="8" class="box-card"/>
   <text x="480" y="118" class="txt-title">SYSTEM.INFO</text>
 
-  <!-- Right Header Tags -->
+  <!-- Right Header Tags (Positioned safely inside frame boundary) -->
   <text x="480" y="145" class="txt-tag">@radhikarajput0410-wq</text>
-  <circle cx="1085" cy="141" r="4" fill="{text_red}" class="live-dot"/>
-  <text x="1095" y="145" class="txt-live">&#x25CF; LIVE</text>
+  <circle cx="1025" cy="141" r="4" fill="{text_red}" class="live-dot"/>
+  <text x="1035" y="145" class="txt-live">&#x25CF; LIVE</text>
 
-  <line x1="480" y1="158" x2="1110" y2="158" stroke="{border_col}" stroke-width="1"/>
+  <line x1="480" y1="158" x2="1080" y2="158" stroke="{border_col}" stroke-width="1"/>
 
   <!-- Table Rows (Compact Spacing to prevent overflow) -->
   <g transform="translate(480, 180)">
     <!-- Row 1: Subject -->
     <text x="0" y="0" class="txt-key">Subject</text>
-    <text x="65" y="0" class="txt-dots">.........................................................................</text>
-    <text x="630" y="0" text-anchor="end" class="txt-val">RADHIKA RAJPUT</text>
+    <text x="65" y="0" class="txt-dots">...................................................................</text>
+    <text x="600" y="0" text-anchor="end" class="txt-val">RADHIKA RAJPUT</text>
 
     <!-- Row 2: Role -->
     <g transform="translate(0, 22)">
       <text x="0" y="0" class="txt-key">Role</text>
-      <text x="45" y="0" class="txt-dots">...........................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">Data Scientist &amp; AI/ML Engineer</text>
+      <text x="45" y="0" class="txt-dots">.....................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">Data Scientist &amp; AI/ML Engineer</text>
     </g>
 
     <!-- Row 3: Origin -->
     <g transform="translate(0, 44)">
       <text x="0" y="0" class="txt-key">Origin</text>
-      <text x="55" y="0" class="txt-dots">..........................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">Ghaziabad, India</text>
+      <text x="55" y="0" class="txt-dots">....................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">Ghaziabad, India</text>
     </g>
 
     <!-- Row 4: Education -->
     <g transform="translate(0, 66)">
       <text x="0" y="0" class="txt-key">Education</text>
-      <text x="80" y="0" class="txt-dots">.......................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">B.Tech in CSE</text>
+      <text x="80" y="0" class="txt-dots">.................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">B.Tech in CSE</text>
     </g>
 
     <!-- Row 5: Status -->
     <g transform="translate(0, 88)">
       <text x="0" y="0" class="txt-key">Status</text>
-      <text x="55" y="0" class="txt-dots">..........................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">Building Multi-Modal RAG &amp; CV</text>
+      <text x="55" y="0" class="txt-dots">....................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">Building Multi-Modal RAG &amp; CV</text>
     </g>
 
     <!-- Row 6: ToolChain -->
     <g transform="translate(0, 110)">
       <text x="0" y="0" class="txt-key">ToolChain</text>
-      <text x="75" y="0" class="txt-dots">........................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">Git, GitHub, VS Code, Docker, PyTorch</text>
+      <text x="75" y="0" class="txt-dots">..................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">Git, GitHub, VS Code, Docker, PyTorch</text>
     </g>
 
     <!-- Divider -->
-    <line x1="0" y1="126" x2="630" y2="126" stroke="{border_col}" stroke-width="1"/>
+    <line x1="0" y1="126" x2="600" y2="126" stroke="{border_col}" stroke-width="1"/>
 
     <!-- Row 7: Core.Lang -->
     <g transform="translate(0, 146)">
       <text x="0" y="0" class="txt-key">Core.Lang</text>
-      <text x="80" y="0" class="txt-dots">.......................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">Python, C++, SQL, R</text>
+      <text x="80" y="0" class="txt-dots">.................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">Python, C++, SQL, R</text>
     </g>
 
     <!-- Row 8: Core.AI/ML -->
     <g transform="translate(0, 168)">
       <text x="0" y="0" class="txt-key">Core.AI/ML</text>
-      <text x="85" y="0" class="txt-dots">......................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">PyTorch, TensorFlow, Keras, HuggingFace</text>
+      <text x="85" y="0" class="txt-dots">................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">PyTorch, TensorFlow, Keras, HuggingFace</text>
     </g>
 
     <!-- Row 9: Core.CV/RAG -->
     <g transform="translate(0, 190)">
       <text x="0" y="0" class="txt-key">Core.CV/RAG</text>
-      <text x="95" y="0" class="txt-dots">.....................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">OpenCV, LangChain, Multi-Modal RAG</text>
+      <text x="95" y="0" class="txt-dots">...............................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">OpenCV, LangChain, Multi-Modal RAG</text>
     </g>
 
     <!-- Row 10: Core.Infra -->
     <g transform="translate(0, 212)">
       <text x="0" y="0" class="txt-key">Core.Infra</text>
-      <text x="85" y="0" class="txt-dots">......................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">AWS, Cloudflare, Docker, FastAPI, Streamlit</text>
+      <text x="85" y="0" class="txt-dots">................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">AWS, Cloudflare, Docker, FastAPI, Streamlit</text>
     </g>
 
     <!-- Divider -->
-    <line x1="0" y1="228" x2="630" y2="228" stroke="{border_col}" stroke-width="1"/>
+    <line x1="0" y1="228" x2="600" y2="228" stroke="{border_col}" stroke-width="1"/>
 
     <!-- Row 11: Grid.Mail -->
     <g transform="translate(0, 248)">
       <text x="0" y="0" class="txt-key">Grid.Mail</text>
-      <text x="75" y="0" class="txt-dots">........................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">radhikarajput0410@gmail.com</text>
+      <text x="75" y="0" class="txt-dots">..................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">radhikarajput0410@gmail.com</text>
     </g>
 
     <!-- Row 12: Grid.LinkedIn -->
     <g transform="translate(0, 270)">
       <text x="0" y="0" class="txt-key">Grid.LinkedIn</text>
-      <text x="95" y="0" class="txt-dots">.....................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">linkedin.com/in/radhika-rajput-832524345</text>
+      <text x="95" y="0" class="txt-dots">...............................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">linkedin.com/in/radhika-rajput-832524345</text>
     </g>
 
     <!-- Row 13: Grid.GitHub -->
     <g transform="translate(0, 292)">
       <text x="0" y="0" class="txt-key">Grid.GitHub</text>
-      <text x="85" y="0" class="txt-dots">......................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">github.com/radhikarajput0410-wq</text>
+      <text x="85" y="0" class="txt-dots">................................................................</text>
+      <text x="600" y="0" text-anchor="end" class="txt-val">github.com/radhikarajput0410-wq</text>
     </g>
   </g>
 </svg>'''
