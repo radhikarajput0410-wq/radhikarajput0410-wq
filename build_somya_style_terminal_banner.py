@@ -66,8 +66,8 @@ def build_portrait_dither_path(offset_x=85, offset_y=135):
             
     return " ".join(path_runs)
 
-# 2. Draw Dithered Dot Logos (Python, PyTorch, Hugging Face)
-def create_dithered_logo_path(draw_func, offset_x=105, offset_y=160, width=240, height=240):
+# 2. Draw Stippled Tech Badge (like TS / PY / PT badge in somya-ctrl)
+def create_dithered_badge_path(draw_func, offset_x=105, offset_y=160, width=240, height=240):
     img = Image.new('L', (width, height), 255)
     draw = ImageDraw.Draw(img)
     draw_func(draw, width, height)
@@ -95,27 +95,55 @@ def create_dithered_logo_path(draw_func, offset_x=105, offset_y=160, width=240, 
                 
     return " ".join(path_runs)
 
-def draw_python(draw, w, h):
+# Badge 1: PY (Python Tech Badge)
+def draw_badge_py(draw, w, h):
     cx, cy = w // 2, h // 2
-    draw.rectangle([cx - 45, cy - 70, cx + 18, cy - 25], fill=0)
-    draw.rectangle([cx - 70, cy - 45, cx + 45, cy - 10], fill=0)
-    draw.ellipse([cx - 22, cy - 58, cx - 8, cy - 44], fill=255)
-    draw.rectangle([cx - 18, cy + 25, cx + 45, cy + 70], fill=0)
-    draw.rectangle([cx - 45, cy + 10, cx + 70, cy + 45], fill=0)
-    draw.ellipse([cx + 8, cy + 44, cx + 22, cy + 58], fill=255)
+    # Outer square stippled border
+    b = 85
+    draw.rectangle([cx - b, cy - b, cx + b, cy + b], fill=0)
+    draw.rectangle([cx - b + 10, cy - b + 10, cx + b - 10, cy + b - 10], fill=255)
+    
+    # Letter P
+    draw.rectangle([cx - 55, cy - 45, cx - 38, cy + 45], fill=0)
+    draw.rectangle([cx - 55, cy - 45, cx - 10, cy], fill=0)
+    draw.rectangle([cx - 38, cy - 30, cx - 10, cy - 15], fill=255)
+    
+    # Letter Y
+    draw.polygon([(cx + 5, cy - 45), (cx + 22, cy - 45), (cx + 38, cy - 5), (cx + 38, cy + 45), (cx + 21, cy + 45), (cx + 21, cy - 5), (cx + 5, cy - 45)], fill=0)
+    draw.polygon([(cx + 70, cy - 45), (cx + 53, cy - 45), (cx + 38, cy - 5)], fill=0)
 
-def draw_pytorch(draw, w, h):
+# Badge 2: PT (PyTorch Tech Badge)
+def draw_badge_pt(draw, w, h):
     cx, cy = w // 2, h // 2
-    draw.ellipse([cx - 65, cy - 65, cx + 65, cy + 65], outline=0, width=14)
-    draw.ellipse([cx - 12, cy - 12, cx + 12, cy + 12], fill=0)
-    draw.polygon([(cx + 18, cy - 80), (cx + 55, cy - 30), (cx + 12, cy - 40)], fill=0)
+    b = 85
+    draw.rectangle([cx - b, cy - b, cx + b, cy + b], fill=0)
+    draw.rectangle([cx - b + 10, cy - b + 10, cx + b - 10, cy + b - 10], fill=255)
+    
+    # Letter P
+    draw.rectangle([cx - 58, cy - 45, cx - 41, cy + 45], fill=0)
+    draw.rectangle([cx - 58, cy - 45, cx - 15, cy], fill=0)
+    draw.rectangle([cx - 41, cy - 30, cx - 15, cy - 15], fill=255)
+    
+    # Letter T
+    draw.rectangle([cx - 5, cy - 45, cx + 60, cy - 30], fill=0)
+    draw.rectangle([cx + 18, cy - 45, cx + 36, cy + 45], fill=0)
 
-def draw_huggingface(draw, w, h):
+# Badge 3: AI (Artificial Intelligence / LLM Badge)
+def draw_badge_ai(draw, w, h):
     cx, cy = w // 2, h // 2
-    draw.ellipse([cx - 70, cy - 70, cx + 70, cy + 70], outline=0, width=12)
-    draw.ellipse([cx - 40, cy - 25, cx - 18, cy - 3], fill=0)
-    draw.ellipse([cx + 18, cy - 25, cx + 40, cy - 3], fill=0)
-    draw.arc([cx - 45, cy - 10, cx + 45, cy + 45], start=20, end=160, fill=0, width=10)
+    b = 85
+    draw.rectangle([cx - b, cy - b, cx + b, cy + b], fill=0)
+    draw.rectangle([cx - b + 10, cy - b + 10, cx + b - 10, cy + b - 10], fill=255)
+    
+    # Letter A
+    draw.polygon([(cx - 55, cy + 45), (cx - 38, cy + 45), (cx - 28, cy - 45), (cx - 45, cy - 45)], fill=0)
+    draw.polygon([(cx - 5, cy + 45), (cx - 22, cy + 45), (cx - 28, cy - 45), (cx - 12, cy - 45)], fill=0)
+    draw.rectangle([cx - 45, cy, cx - 15, cy + 14], fill=0)
+    
+    # Letter I
+    draw.rectangle([cx + 10, cy - 45, cx + 60, cy - 31], fill=0)
+    draw.rectangle([cx + 26, cy - 45, cx + 44, cy + 45], fill=0)
+    draw.rectangle([cx + 10, cy + 31, cx + 60, cy + 45], fill=0)
 
 def generate_banner_svg(filename, is_dark=True):
     bg_main     = "#0B101D" if is_dark else "#F1F5F9"
@@ -130,15 +158,15 @@ def generate_banner_svg(filename, is_dark=True):
     dot_color   = "#334155" if is_dark else "#CBD5E1"
     
     portrait_d = build_portrait_dither_path(offset_x=85, offset_y=135)
-    py_d       = create_dithered_logo_path(draw_python, offset_x=105, offset_y=160)
-    torch_d    = create_dithered_logo_path(draw_pytorch, offset_x=105, offset_y=160)
-    hf_d       = create_dithered_logo_path(draw_huggingface, offset_x=105, offset_y=160)
+    py_d       = create_dithered_badge_path(draw_badge_py, offset_x=105, offset_y=160)
+    torch_d    = create_dithered_badge_path(draw_badge_pt, offset_x=105, offset_y=160)
+    ai_d       = create_dithered_badge_path(draw_badge_ai, offset_x=105, offset_y=160)
 
     key_times   = "0; 0.1875; 0.25; 0.4375; 0.50; 0.6875; 0.75; 0.9375; 1.0"
     op_portrait = "1; 1; 0; 0; 0; 0; 0; 0; 1"
     op_py       = "0; 0; 1; 1; 0; 0; 0; 0; 0"
     op_torch    = "0; 0; 0; 0; 1; 1; 0; 0; 0"
-    op_hf       = "0; 0; 0; 0; 0; 0; 1; 1; 0"
+    op_ai       = "0; 0; 0; 0; 0; 0; 1; 1; 0"
 
     svg_content = f'''<svg fill="none" viewBox="0 0 1180 610" width="100%" height="610" xmlns="http://www.w3.org/2000/svg">
   <style>
@@ -193,24 +221,24 @@ def generate_banner_svg(filename, is_dark=True):
       </path>
     </g>
 
-    <!-- Frame 2: Python Dithered Logo -->
+    <!-- Frame 2: PY (Python) Stippled Tech Badge -->
     <g id="layer-python">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{py_d}">
         <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_py}"/>
       </path>
     </g>
 
-    <!-- Frame 3: PyTorch Dithered Logo -->
+    <!-- Frame 3: PT (PyTorch) Stippled Tech Badge -->
     <g id="layer-pytorch">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{torch_d}">
         <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_torch}"/>
       </path>
     </g>
 
-    <!-- Frame 4: Hugging Face Dithered Logo -->
+    <!-- Frame 4: AI (Artificial Intelligence) Stippled Tech Badge -->
     <g id="layer-huggingface">
-      <path shape-rendering="crispEdges" fill="{text_purple}" d="{hf_d}">
-        <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_hf}"/>
+      <path shape-rendering="crispEdges" fill="{text_purple}" d="{ai_d}">
+        <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_ai}"/>
       </path>
     </g>
   </g>
