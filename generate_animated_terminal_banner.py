@@ -9,7 +9,7 @@ def build_portrait_dither_path(offset_x=85, offset_y=135):
     img = Image.open(photo_path).convert('L')
     w, h = img.size
     
-    # Upper-body / Head & Shoulders crop (like somya-ctrl portrait)
+    # Upper-body / Head & Shoulders crop
     left, top = int(w * 0.18), int(h * 0.05)
     right, bottom = int(w * 0.82), int(h * 0.52)
     cropped = img.crop((left, top, right, bottom))
@@ -66,7 +66,7 @@ def build_portrait_dither_path(offset_x=85, offset_y=135):
             
     return " ".join(path_runs)
 
-# 2. Draw Stippled Tech Badge (like TS / PY / PT badge in somya-ctrl)
+# 2. Draw Stippled Tech Badge (PY / PT / AI)
 def create_dithered_badge_path(draw_func, offset_x=105, offset_y=160, width=240, height=240):
     img = Image.new('L', (width, height), 255)
     draw = ImageDraw.Draw(img)
