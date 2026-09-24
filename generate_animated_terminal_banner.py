@@ -98,15 +98,12 @@ def create_dithered_logo_path(draw_func, offset_x=105, offset_y=160, width=240, 
 # Logo 1: Python Emblem
 def draw_python_logo(draw, w, h):
     cx, cy = w // 2, h // 2
-    # Upper snake
     draw.rectangle([cx - 45, cy - 65, cx + 18, cy - 20], fill=0)
     draw.rectangle([cx - 65, cy - 40, cx + 45, cy - 5], fill=0)
-    draw.ellipse([cx - 22, cy - 52, cx - 8, cy - 38], fill=255) # Eye
-    
-    # Lower snake
+    draw.ellipse([cx - 22, cy - 52, cx - 8, cy - 38], fill=255)
     draw.rectangle([cx - 18, cy + 20, cx + 45, cy + 65], fill=0)
     draw.rectangle([cx - 45, cy + 5, cx + 65, cy + 40], fill=0)
-    draw.ellipse([cx + 8, cy + 38, cx + 22, cy + 52], fill=255) # Eye
+    draw.ellipse([cx + 8, cy + 38, cx + 22, cy + 52], fill=255)
 
 # Logo 2: PyTorch Flame Emblem
 def draw_pytorch_logo(draw, w, h):
@@ -118,19 +115,12 @@ def draw_pytorch_logo(draw, w, h):
 # Logo 3: Docker Whale Emblem
 def draw_docker_logo(draw, w, h):
     cx, cy = w // 2, h // 2
-    # Whale body
     draw.ellipse([cx - 65, cy - 5, cx + 55, cy + 45], fill=0)
-    # Tail fin
     draw.polygon([(cx + 45, cy + 5), (cx + 72, cy - 25), (cx + 55, cy + 22)], fill=0)
-    # Spout water drop
     draw.ellipse([cx + 65, cy - 40, cx + 75, cy - 30], fill=0)
-    
-    # Containers on whale back
-    # Bottom row containers (3)
     draw.rectangle([cx - 45, cy - 20, cx - 25, cy - 6], fill=0)
     draw.rectangle([cx - 20, cy - 20, cx, cy - 6], fill=0)
     draw.rectangle([cx + 5, cy - 20, cx + 25, cy - 6], fill=0)
-    # Top row containers (2)
     draw.rectangle([cx - 35, cy - 38, cx - 15, cy - 24], fill=0)
     draw.rectangle([cx - 10, cy - 38, cx + 10, cy - 24], fill=0)
 
@@ -148,16 +138,18 @@ def draw_ai_brain_logo(draw, w, h):
         draw.ellipse([nx - 14, ny - 14, nx + 14, ny + 14], fill=0)
 
 def generate_banner_svg(filename, is_dark=True):
-    bg_main     = "#0B101D" if is_dark else "#F1F5F9"
-    window_bg   = "#111827" if is_dark else "#FFFFFF"
-    border_col  = "#1F2937" if is_dark else "#CBD5E1"
-    box_bg      = "#0D1424" if is_dark else "#F8FAFC"
-    text_cyan   = "#22D3EE" if is_dark else "#0891B2"
-    text_purple = "#A78BFA" if is_dark else "#7C3AED"
-    text_main   = "#F3F4F6" if is_dark else "#0F172A"
-    text_muted  = "#64748B" if is_dark else "#64748B"
-    text_red    = "#EF4444" if is_dark else "#DC2626"
-    dot_color   = "#334155" if is_dark else "#CBD5E1"
+    bg_main      = "#0B101D" if is_dark else "#F1F5F9"
+    window_bg    = "#111827" if is_dark else "#FFFFFF"
+    border_col   = "#1F2937" if is_dark else "#CBD5E1"
+    box_bg       = "#0D1424" if is_dark else "#F8FAFC"
+    text_cyan    = "#22D3EE" if is_dark else "#0891B2"
+    pill_bg      = "#164E63" if is_dark else "#E0F2FE"
+    pill_fg      = "#22D3EE" if is_dark else "#0369A1"
+    text_purple  = "#A78BFA" if is_dark else "#7C3AED"
+    text_main    = "#F3F4F6" if is_dark else "#0F172A"
+    text_muted   = "#64748B" if is_dark else "#64748B"
+    text_red     = "#EF4444" if is_dark else "#DC2626"
+    dot_color    = "#334155" if is_dark else "#CBD5E1"
     
     portrait_d = build_portrait_dither_path(offset_x=85, offset_y=135)
     py_d       = create_dithered_logo_path(draw_python_logo, offset_x=105, offset_y=160)
@@ -180,7 +172,7 @@ def generate_banner_svg(filename, is_dark=True):
     .box-card {{ fill: {box_bg}; stroke: {border_col}; stroke-width: 1; }}
     
     .txt-title {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 600; fill: {text_cyan}; letter-spacing: 1px; }}
-    .txt-tag {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 700; fill: {text_cyan}; }}
+    .txt-tag {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 700; fill: {pill_fg}; }}
     .txt-key {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 500; fill: {text_cyan}; }}
     .txt-val {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 600; fill: {text_main}; }}
     .txt-dots {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 11px; fill: {dot_color}; letter-spacing: 1.5px; }}
@@ -257,17 +249,20 @@ def generate_banner_svg(filename, is_dark=True):
 
   <!-- RIGHT BOX: SYSTEM.INFO (Terminal Key-Value Table) -->
   <rect x="455" y="90" width="680" height="475" rx="8" class="box-card"/>
+  
+  <!-- SYSTEM.INFO Title (Left) + LIVE Badge (Top-Right, aligned like somya-ctrl) -->
   <text x="480" y="118" class="txt-title">SYSTEM.INFO</text>
+  <circle cx="1060" cy="114" r="4" fill="{text_red}" class="live-dot"/>
+  <text x="1070" y="118" class="txt-live">&#x25CF; LIVE</text>
 
-  <!-- Right Header Tags (LIVE badge moved safely inside frame at x=920) -->
-  <text x="480" y="145" class="txt-tag">@radhikarajput0410-wq</text>
-  <circle cx="920" cy="141" r="4" fill="{text_red}" class="live-dot"/>
-  <text x="930" y="145" class="txt-live">&#x25CF; LIVE</text>
+  <!-- Cyan Pill Badge for Username -->
+  <rect x="480" y="132" width="168" height="24" rx="4" fill="{pill_bg}"/>
+  <text x="490" y="148" class="txt-tag">@radhikarajput0410-wq</text>
 
-  <line x1="480" y1="158" x2="1080" y2="158" stroke="{border_col}" stroke-width="1"/>
+  <line x1="480" y1="168" x2="1080" y2="168" stroke="{border_col}" stroke-width="1"/>
 
   <!-- Table Rows (Compact Spacing to prevent overflow) -->
-  <g transform="translate(480, 180)">
+  <g transform="translate(480, 192)">
     <!-- Row 1: Subject -->
     <text x="0" y="0" class="txt-key">Subject</text>
     <text x="65" y="0" class="txt-dots">...................................................................</text>

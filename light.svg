@@ -5,7 +5,7 @@
     .box-card { fill: #F8FAFC; stroke: #CBD5E1; stroke-width: 1; }
     
     .txt-title { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 600; fill: #0891B2; letter-spacing: 1px; }
-    .txt-tag { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 700; fill: #0891B2; }
+    .txt-tag { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 700; fill: #0369A1; }
     .txt-key { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 500; fill: #0891B2; }
     .txt-val { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 600; fill: #0F172A; }
     .txt-dots { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 11px; fill: #CBD5E1; letter-spacing: 1.5px; }
@@ -82,17 +82,20 @@
 
   <!-- RIGHT BOX: SYSTEM.INFO (Terminal Key-Value Table) -->
   <rect x="455" y="90" width="680" height="475" rx="8" class="box-card"/>
+  
+  <!-- SYSTEM.INFO Title (Left) + LIVE Badge (Top-Right, aligned like somya-ctrl) -->
   <text x="480" y="118" class="txt-title">SYSTEM.INFO</text>
+  <circle cx="1060" cy="114" r="4" fill="#DC2626" class="live-dot"/>
+  <text x="1070" y="118" class="txt-live">&#x25CF; LIVE</text>
 
-  <!-- Right Header Tags (LIVE badge moved safely inside frame at x=920) -->
-  <text x="480" y="145" class="txt-tag">@radhikarajput0410-wq</text>
-  <circle cx="920" cy="141" r="4" fill="#DC2626" class="live-dot"/>
-  <text x="930" y="145" class="txt-live">&#x25CF; LIVE</text>
+  <!-- Cyan Pill Badge for Username -->
+  <rect x="480" y="132" width="168" height="24" rx="4" fill="#E0F2FE"/>
+  <text x="490" y="148" class="txt-tag">@radhikarajput0410-wq</text>
 
-  <line x1="480" y1="158" x2="1080" y2="158" stroke="#CBD5E1" stroke-width="1"/>
+  <line x1="480" y1="168" x2="1080" y2="168" stroke="#CBD5E1" stroke-width="1"/>
 
   <!-- Table Rows (Compact Spacing to prevent overflow) -->
-  <g transform="translate(480, 180)">
+  <g transform="translate(480, 192)">
     <!-- Row 1: Subject -->
     <text x="0" y="0" class="txt-key">Subject</text>
     <text x="65" y="0" class="txt-dots">...................................................................</text>

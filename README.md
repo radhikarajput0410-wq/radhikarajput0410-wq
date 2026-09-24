@@ -4,8 +4,8 @@
 
 <!-- 1. Theme-Aware Animated Terminal Banner with Dithered Photo -->
 <div align="center">
-  <img src="dark.svg?v=3#gh-dark-mode-only" alt="Radhika Rajput Banner" width="100%" />
-  <img src="light.svg?v=3#gh-light-mode-only" alt="Radhika Rajput Banner" width="100%" />
+  <img src="dark.svg?v=5#gh-dark-mode-only" alt="Radhika Rajput Banner" width="100%" />
+  <img src="light.svg?v=5#gh-light-mode-only" alt="Radhika Rajput Banner" width="100%" />
 </div>
 
 <br/><br/>
