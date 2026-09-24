@@ -95,7 +95,7 @@ def create_dithered_logo_path(draw_func, offset_x=105, offset_y=160, width=240, 
                 
     return " ".join(path_runs)
 
-# Logo 1: Python Double-Snake Emblem
+# Logo 1: Python Emblem
 def draw_python_logo(draw, w, h):
     cx, cy = w // 2, h // 2
     # Upper snake
@@ -115,21 +115,35 @@ def draw_pytorch_logo(draw, w, h):
     draw.ellipse([cx - 16, cy - 16, cx + 16, cy + 16], fill=0)
     draw.polygon([(cx + 20, cy - 88), (cx + 62, cy - 32), (cx + 15, cy - 42)], fill=0)
 
-# Logo 3: AI Neural Network Brain Node Matrix Emblem
+# Logo 3: Docker Whale Emblem
+def draw_docker_logo(draw, w, h):
+    cx, cy = w // 2, h // 2
+    # Whale body
+    draw.ellipse([cx - 65, cy - 5, cx + 55, cy + 45], fill=0)
+    # Tail fin
+    draw.polygon([(cx + 45, cy + 5), (cx + 72, cy - 25), (cx + 55, cy + 22)], fill=0)
+    # Spout water drop
+    draw.ellipse([cx + 65, cy - 40, cx + 75, cy - 30], fill=0)
+    
+    # Containers on whale back
+    # Bottom row containers (3)
+    draw.rectangle([cx - 45, cy - 20, cx - 25, cy - 6], fill=0)
+    draw.rectangle([cx - 20, cy - 20, cx, cy - 6], fill=0)
+    draw.rectangle([cx + 5, cy - 20, cx + 25, cy - 6], fill=0)
+    # Top row containers (2)
+    draw.rectangle([cx - 35, cy - 38, cx - 15, cy - 24], fill=0)
+    draw.rectangle([cx - 10, cy - 38, cx + 10, cy - 24], fill=0)
+
+# Logo 4: AI Brain Neural Matrix Emblem
 def draw_ai_brain_logo(draw, w, h):
     cx, cy = w // 2, h // 2
-    # Outer stippled ring frame
     draw.ellipse([cx - 75, cy - 75, cx + 75, cy + 75], outline=0, width=12)
-    # Center node
     draw.ellipse([cx - 20, cy - 20, cx + 20, cy + 20], fill=0)
-    
-    # 6 Surrounding nodes & connecting arms
     angles = [0, 60, 120, 180, 240, 300]
-    r_dist = 50
     for a in angles:
         rad = np.radians(a)
-        nx = int(cx + r_dist * np.cos(rad))
-        ny = int(cy + r_dist * np.sin(rad))
+        nx = int(cx + 50 * np.cos(rad))
+        ny = int(cy + 50 * np.sin(rad))
         draw.line([(cx, cy), (nx, ny)], fill=0, width=8)
         draw.ellipse([nx - 14, ny - 14, nx + 14, ny + 14], fill=0)
 
@@ -148,13 +162,16 @@ def generate_banner_svg(filename, is_dark=True):
     portrait_d = build_portrait_dither_path(offset_x=85, offset_y=135)
     py_d       = create_dithered_logo_path(draw_python_logo, offset_x=105, offset_y=160)
     torch_d    = create_dithered_logo_path(draw_pytorch_logo, offset_x=105, offset_y=160)
+    docker_d   = create_dithered_logo_path(draw_docker_logo, offset_x=105, offset_y=160)
     ai_d       = create_dithered_logo_path(draw_ai_brain_logo, offset_x=105, offset_y=160)
 
-    key_times   = "0; 0.1875; 0.25; 0.4375; 0.50; 0.6875; 0.75; 0.9375; 1.0"
-    op_portrait = "1; 1; 0; 0; 0; 0; 0; 0; 1"
-    op_py       = "0; 0; 1; 1; 0; 0; 0; 0; 0"
-    op_torch    = "0; 0; 0; 0; 1; 1; 0; 0; 0"
-    op_ai       = "0; 0; 0; 0; 0; 0; 1; 1; 0"
+    # 5-stage animation loop timing
+    key_times   = "0; 0.15; 0.20; 0.35; 0.40; 0.55; 0.60; 0.75; 0.80; 0.95; 1.0"
+    op_portrait = "1; 1; 0; 0; 0; 0; 0; 0; 0; 0; 1"
+    op_py       = "0; 0; 1; 1; 0; 0; 0; 0; 0; 0; 0"
+    op_torch    = "0; 0; 0; 0; 1; 1; 0; 0; 0; 0; 0"
+    op_docker   = "0; 0; 0; 0; 0; 0; 1; 1; 0; 0; 0"
+    op_ai       = "0; 0; 0; 0; 0; 0; 0; 0; 1; 1; 0"
 
     svg_content = f'''<svg fill="none" viewBox="0 0 1180 610" width="100%" height="610" xmlns="http://www.w3.org/2000/svg">
   <style>
@@ -205,28 +222,35 @@ def generate_banner_svg(filename, is_dark=True):
     <!-- Frame 1: Radhika Dithered Photo Portrait -->
     <g id="layer-portrait">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{portrait_d}">
-        <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_portrait}"/>
+        <animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_portrait}"/>
       </path>
     </g>
 
     <!-- Frame 2: Python Dithered Logo -->
     <g id="layer-python">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{py_d}">
-        <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_py}"/>
+        <animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_py}"/>
       </path>
     </g>
 
     <!-- Frame 3: PyTorch Dithered Logo -->
     <g id="layer-pytorch">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{torch_d}">
-        <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_torch}"/>
+        <animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_torch}"/>
       </path>
     </g>
 
-    <!-- Frame 4: AI Neural Network Dithered Emblem -->
-    <g id="layer-huggingface">
+    <!-- Frame 4: Docker Dithered Logo -->
+    <g id="layer-docker">
+      <path shape-rendering="crispEdges" fill="{text_purple}" d="{docker_d}">
+        <animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_docker}"/>
+      </path>
+    </g>
+
+    <!-- Frame 5: AI Brain Dithered Emblem -->
+    <g id="layer-ai">
       <path shape-rendering="crispEdges" fill="{text_purple}" d="{ai_d}">
-        <animate attributeName="opacity" dur="16s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_ai}"/>
+        <animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="{key_times}" values="{op_ai}"/>
       </path>
     </g>
   </g>
@@ -235,10 +259,10 @@ def generate_banner_svg(filename, is_dark=True):
   <rect x="455" y="90" width="680" height="475" rx="8" class="box-card"/>
   <text x="480" y="118" class="txt-title">SYSTEM.INFO</text>
 
-  <!-- Right Header Tags (Positioned safely inside frame boundary) -->
+  <!-- Right Header Tags (LIVE badge moved safely inside frame at x=920) -->
   <text x="480" y="145" class="txt-tag">@radhikarajput0410-wq</text>
-  <circle cx="1025" cy="141" r="4" fill="{text_red}" class="live-dot"/>
-  <text x="1035" y="145" class="txt-live">&#x25CF; LIVE</text>
+  <circle cx="920" cy="141" r="4" fill="{text_red}" class="live-dot"/>
+  <text x="930" y="145" class="txt-live">&#x25CF; LIVE</text>
 
   <line x1="480" y1="158" x2="1080" y2="158" stroke="{border_col}" stroke-width="1"/>
 
