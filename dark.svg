@@ -1,17 +1,15 @@
 <svg fill="none" viewBox="0 0 1180 610" width="100%" height="610" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Inter:wght@400;600;800&amp;display=swap');
-
       .bg-main { fill: #0A101F; }
       .ui-chrome { stroke: #22D3EE; stroke-width: 1; }
       .ui-cyan { fill: #22D3EE; }
       .ui-accent { fill: #10B981; }
-      .text-head { font-family: 'Fira Code', monospace; font-size: 13px; font-weight: 600; fill: #22D3EE; letter-spacing: 1.5px; }
-      .text-label { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 500; fill: #64748B; }
-      .text-val { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; fill: #F1F5F9; }
-      .text-accent { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; fill: #10B981; }
-      .text-cyan { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; fill: #22D3EE; }
+      .text-head { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', 'Segoe UI Mono', monospace; font-size: 13px; font-weight: 600; fill: #22D3EE; letter-spacing: 1.5px; }
+      .text-label { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', 'Segoe UI Mono', monospace; font-size: 14px; font-weight: 500; fill: #64748B; }
+      .text-val { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', 'Segoe UI Mono', monospace; font-size: 14px; font-weight: 600; fill: #F1F5F9; }
+      .text-accent { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', 'Segoe UI Mono', monospace; font-size: 14px; font-weight: 600; fill: #10B981; }
+      .text-cyan { font-family: ui-monospace, 'Fira Code', 'Cascadia Code', 'Segoe UI Mono', monospace; font-size: 14px; font-weight: 600; fill: #22D3EE; }
       
       /* Pulsing LIVE animation */
       @keyframes pulseRed {
