@@ -3,11 +3,10 @@
 <!-- ========================================================================= -->
 
 <!-- 1. Theme-Aware Animated Terminal Banner with Dithered Photo -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="light.svg">
-  <img alt="Radhika Rajput Banner" src="light.svg" width="100%">
-</picture>
+<div align="center">
+  <img src="dark.svg#gh-dark-mode-only" alt="Radhika Rajput Banner" width="100%" />
+  <img src="light.svg#gh-light-mode-only" alt="Radhika Rajput Banner" width="100%" />
+</div>
 
 <br/><br/>
 
