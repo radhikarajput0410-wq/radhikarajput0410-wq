@@ -3,19 +3,19 @@ import numpy as np
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter, ImageDraw
 
-# 1. Process Radhika's Real Photo into Dithered Path
-def build_portrait_dither_path(offset_x=120, offset_y=140):
+# 1. Process Radhika's Real Photo into Dithered Path (Upper Body Portrait Crop)
+def build_portrait_dither_path(offset_x=85, offset_y=135):
     photo_path = r"C:\Users\Radhika\.gemini\antigravity-ide\brain\00e4fd71-44f1-47de-b4b8-d190be800f05\.user_uploaded\media_1790245433298.jpg"
     img = Image.open(photo_path).convert('L')
     w, h = img.size
     
-    # Head & shoulders crop
-    left, top = int(w * 0.15), int(h * 0.05)
-    right, bottom = int(w * 0.85), int(h * 0.55)
+    # Upper-body / Head & Shoulders crop (like somya-ctrl portrait)
+    left, top = int(w * 0.18), int(h * 0.05)
+    right, bottom = int(w * 0.82), int(h * 0.52)
     cropped = img.crop((left, top, right, bottom))
     
-    # Target resolution for VISUAL.MAP box (120x150)
-    target_w, target_h = 120, 150
+    # Target resolution for VISUAL.MAP box (160x180)
+    target_w, target_h = 160, 180
     resized = cropped.resize((target_w, target_h), Image.Resampling.LANCZOS)
     
     enhancer = ImageEnhance.Contrast(resized)
@@ -48,7 +48,7 @@ def build_portrait_dither_path(offset_x=120, offset_y=140):
                     if x - 1 >= 0: arr[y + 1, x - 1] += err * (1 / 16)
                     
     path_runs = []
-    cell_w, cell_h = 2.0, 2.4
+    cell_w, cell_h = 1.95, 2.15
     
     for y in range(h_arr):
         x = 0
@@ -67,7 +67,7 @@ def build_portrait_dither_path(offset_x=120, offset_y=140):
     return " ".join(path_runs)
 
 # 2. Draw Dithered Dot Logos (Python, PyTorch, Hugging Face)
-def create_dithered_logo_path(draw_func, offset_x=120, offset_y=160, width=240, height=240):
+def create_dithered_logo_path(draw_func, offset_x=105, offset_y=160, width=240, height=240):
     img = Image.new('L', (width, height), 255)
     draw = ImageDraw.Draw(img)
     draw_func(draw, width, height)
@@ -85,7 +85,7 @@ def create_dithered_logo_path(draw_func, offset_x=120, offset_y=160, width=240, 
             if y + 1 < h_arr: arr[y + 1, x] += err * 0.4
                 
     path_runs = []
-    cell = 1.2
+    cell = 1.35
     for y in range(0, h_arr, 2):
         for x in range(0, w_arr, 2):
             if arr[y, x] < 128:
@@ -127,15 +127,13 @@ def generate_banner_svg(filename, is_dark=True):
     text_main   = "#F3F4F6" if is_dark else "#0F172A"
     text_muted  = "#64748B" if is_dark else "#64748B"
     text_red    = "#EF4444" if is_dark else "#DC2626"
-    dot_color   = "#334155" if is_dark else "#E2E8F0"
+    dot_color   = "#334155" if is_dark else "#CBD5E1"
     
-    # 1. Generate path strings
-    portrait_d = build_portrait_dither_path(offset_x=120, offset_y=140)
-    py_d       = create_dithered_logo_path(draw_python, offset_x=120, offset_y=160)
-    torch_d    = create_dithered_logo_path(draw_pytorch, offset_x=120, offset_y=160)
-    hf_d       = create_dithered_logo_path(draw_huggingface, offset_x=120, offset_y=160)
+    portrait_d = build_portrait_dither_path(offset_x=85, offset_y=135)
+    py_d       = create_dithered_logo_path(draw_python, offset_x=105, offset_y=160)
+    torch_d    = create_dithered_logo_path(draw_pytorch, offset_x=105, offset_y=160)
+    hf_d       = create_dithered_logo_path(draw_huggingface, offset_x=105, offset_y=160)
 
-    # Keyframe timing values
     key_times   = "0; 0.1875; 0.25; 0.4375; 0.50; 0.6875; 0.75; 0.9375; 1.0"
     op_portrait = "1; 1; 0; 0; 0; 0; 0; 0; 1"
     op_py       = "0; 0; 1; 1; 0; 0; 0; 0; 0"
@@ -150,9 +148,9 @@ def generate_banner_svg(filename, is_dark=True):
     
     .txt-title {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 600; fill: {text_cyan}; letter-spacing: 1px; }}
     .txt-tag {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 700; fill: {text_cyan}; }}
-    .txt-key {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 500; fill: {text_cyan}; }}
-    .txt-val {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 13px; font-weight: 600; fill: {text_main}; }}
-    .txt-dots {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; fill: {dot_color}; letter-spacing: 2px; }}
+    .txt-key {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 500; fill: {text_cyan}; }}
+    .txt-val {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 600; fill: {text_main}; }}
+    .txt-dots {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 11px; fill: {dot_color}; letter-spacing: 1.5px; }}
     .txt-live {{ font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; font-weight: 700; fill: {text_red}; }}
 
     @keyframes pulseRed {{
@@ -222,104 +220,104 @@ def generate_banner_svg(filename, is_dark=True):
   <text x="480" y="118" class="txt-title">SYSTEM.INFO</text>
 
   <!-- Right Header Tags -->
-  <text x="480" y="150" class="txt-tag">@radhikarajput0410-wq</text>
-  <circle cx="1085" cy="146" r="4" fill="{text_red}" class="live-dot"/>
-  <text x="1095" y="150" class="txt-live">&#x25CF; LIVE</text>
+  <text x="480" y="145" class="txt-tag">@radhikarajput0410-wq</text>
+  <circle cx="1085" cy="141" r="4" fill="{text_red}" class="live-dot"/>
+  <text x="1095" y="145" class="txt-live">&#x25CF; LIVE</text>
 
-  <line x1="480" y1="168" x2="1110" y2="168" stroke="{border_col}" stroke-width="1"/>
+  <line x1="480" y1="158" x2="1110" y2="158" stroke="{border_col}" stroke-width="1"/>
 
-  <!-- Table Rows -->
-  <g transform="translate(480, 195)">
+  <!-- Table Rows (Compact Spacing to prevent overflow) -->
+  <g transform="translate(480, 180)">
     <!-- Row 1: Subject -->
     <text x="0" y="0" class="txt-key">Subject</text>
     <text x="65" y="0" class="txt-dots">.........................................................................</text>
     <text x="630" y="0" text-anchor="end" class="txt-val">RADHIKA RAJPUT</text>
 
     <!-- Row 2: Role -->
-    <g transform="translate(0, 30)">
+    <g transform="translate(0, 22)">
       <text x="0" y="0" class="txt-key">Role</text>
       <text x="45" y="0" class="txt-dots">...........................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">Data Scientist &amp; AI/ML Engineer</text>
     </g>
 
     <!-- Row 3: Origin -->
-    <g transform="translate(0, 60)">
+    <g transform="translate(0, 44)">
       <text x="0" y="0" class="txt-key">Origin</text>
       <text x="55" y="0" class="txt-dots">..........................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">Ghaziabad, India</text>
     </g>
 
     <!-- Row 4: Education -->
-    <g transform="translate(0, 90)">
+    <g transform="translate(0, 66)">
       <text x="0" y="0" class="txt-key">Education</text>
       <text x="80" y="0" class="txt-dots">.......................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">B.Tech in CSE</text>
     </g>
 
     <!-- Row 5: Status -->
-    <g transform="translate(0, 120)">
+    <g transform="translate(0, 88)">
       <text x="0" y="0" class="txt-key">Status</text>
       <text x="55" y="0" class="txt-dots">..........................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">Building Multi-Modal RAG &amp; CV</text>
     </g>
 
     <!-- Row 6: ToolChain -->
-    <g transform="translate(0, 150)">
+    <g transform="translate(0, 110)">
       <text x="0" y="0" class="txt-key">ToolChain</text>
       <text x="75" y="0" class="txt-dots">........................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">Git, GitHub, VS Code, Docker, PyTorch</text>
     </g>
 
     <!-- Divider -->
-    <line x1="0" y1="175" x2="630" y2="175" stroke="{border_col}" stroke-width="1"/>
+    <line x1="0" y1="126" x2="630" y2="126" stroke="{border_col}" stroke-width="1"/>
 
     <!-- Row 7: Core.Lang -->
-    <g transform="translate(0, 202)">
+    <g transform="translate(0, 146)">
       <text x="0" y="0" class="txt-key">Core.Lang</text>
       <text x="80" y="0" class="txt-dots">.......................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">Python, C++, SQL, R</text>
     </g>
 
     <!-- Row 8: Core.AI/ML -->
-    <g transform="translate(0, 232)">
+    <g transform="translate(0, 168)">
       <text x="0" y="0" class="txt-key">Core.AI/ML</text>
       <text x="85" y="0" class="txt-dots">......................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">PyTorch, TensorFlow, Keras, HuggingFace</text>
     </g>
 
     <!-- Row 9: Core.CV/RAG -->
-    <g transform="translate(0, 262)">
+    <g transform="translate(0, 190)">
       <text x="0" y="0" class="txt-key">Core.CV/RAG</text>
       <text x="95" y="0" class="txt-dots">.....................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">OpenCV, LangChain, Multi-Modal RAG</text>
     </g>
 
     <!-- Row 10: Core.Infra -->
-    <g transform="translate(0, 292)">
+    <g transform="translate(0, 212)">
       <text x="0" y="0" class="txt-key">Core.Infra</text>
       <text x="85" y="0" class="txt-dots">......................................................................</text>
-      <text x="630" y="0" text-anchor="end" class="txt-val">AWS, Docker, FastAPI, Streamlit</text>
+      <text x="630" y="0" text-anchor="end" class="txt-val">AWS, Cloudflare, Docker, FastAPI, Streamlit</text>
     </g>
 
     <!-- Divider -->
-    <line x1="0" y1="315" x2="630" y2="315" stroke="{border_col}" stroke-width="1"/>
+    <line x1="0" y1="228" x2="630" y2="228" stroke="{border_col}" stroke-width="1"/>
 
     <!-- Row 11: Grid.Mail -->
-    <g transform="translate(0, 342)">
+    <g transform="translate(0, 248)">
       <text x="0" y="0" class="txt-key">Grid.Mail</text>
       <text x="75" y="0" class="txt-dots">........................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">radhikarajput0410@gmail.com</text>
     </g>
 
     <!-- Row 12: Grid.LinkedIn -->
-    <g transform="translate(0, 372)">
+    <g transform="translate(0, 270)">
       <text x="0" y="0" class="txt-key">Grid.LinkedIn</text>
       <text x="95" y="0" class="txt-dots">.....................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">linkedin.com/in/radhika-rajput-832524345</text>
     </g>
 
     <!-- Row 13: Grid.GitHub -->
-    <g transform="translate(0, 402)">
+    <g transform="translate(0, 292)">
       <text x="0" y="0" class="txt-key">Grid.GitHub</text>
       <text x="85" y="0" class="txt-dots">......................................................................</text>
       <text x="630" y="0" text-anchor="end" class="txt-val">github.com/radhikarajput0410-wq</text>
